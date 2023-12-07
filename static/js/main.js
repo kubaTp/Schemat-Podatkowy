@@ -186,12 +186,15 @@ trzy = (el) => {
 
 refresh = (id) => {
     document.getElementById(id).style.display = "none";
-    const initForm = document.getElementById("initForm");
-
-    for(var i = 0; i < initForm.elements.length; i++)
+    
+    const forms = document.getElementsByTagName("form");
+    for(var i = 0; i < forms.length; i++)
     {
-        initForm.elements[i].checked = false;
-    }   
+        for(var j = 0; j < forms[i].elements.length; j++)
+        {
+            forms[i].elements[j].checked = false;
+        }  
+    } 
 }
 
 addEvent = (element, eventName, fn) => {
