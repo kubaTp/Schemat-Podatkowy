@@ -184,8 +184,14 @@ trzy = (el) => {
 
 }
 
-refresh = () => {
-    window.location.reload();
+refresh = (id) => {
+    document.getElementById(id).style.display = "none";
+    const initForm = document.getElementById("initForm");
+
+    for(var i = 0; i < initForm.elements.length; i++)
+    {
+        initForm.elements[i].checked = false;
+    }   
 }
 
 addEvent = (element, eventName, fn) => {

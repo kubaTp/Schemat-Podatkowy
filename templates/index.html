@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block alert %}
-    <div class="bg-red-rgba lg:w-[60vw] w-[90vw] h-[30vh] absolute lg:left-[20%] left-[5%] lg:top-[35%] top-[45%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alert"><p>Nie mozna wygenerowac schematu podatkowego</p><p onclick="refresh()">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
-    <div class="bg-green-rgba w-[60vw] h-[30vh] absolute left-[20%] top-[35%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alertPositive"><p>Spełnia wszystkie warunki</p><p onclick="refresh()">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
+    <div class="bg-red-rgba lg:w-[60vw] w-[90vw] h-[30vh] absolute lg:left-[20%] left-[5%] lg:top-[35%] top-[45%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alert"><p class="text-center">Nie mozna wygenerowac schematu podatkowego</p><p onclick="refresh('alert')">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
+    <div class="bg-green-rgba lg:w-[60vw] w-[90vw] h-[30vh] absolute lg:left-[20%] left-[5%] lg:top-[35%] top-[45%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alertPositive"><p class="text-center">Spełnia wszystkie warunki</p><p onclick="refresh('alertPositive')">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
 {% endblock %}
 
 {% block content %}
@@ -17,10 +17,10 @@
             (1) Czy jest schemat standarowy?<span class="text-red-500">*</span>
         </p>
 
-        <div class="w-full h-ful flex align-center justify-center py-2 pr-5 font-semibold">
+        <form class="w-full h-ful flex align-center justify-center py-2 pr-5 font-semibold" id="initForm">
             <input type="radio" class="mx-3" name="questionAnswer" value="Tak" onclick="schematStandarowy(this)" autocomplete="off">Tak</input>
             <input type="radio" class="mx-3" name="questionAnswer" value="Nie" onclick="schematStandarowy(this)" autocomplete="off">Nie</input>
-        </div>
+        </form>
 
     </div>
 
