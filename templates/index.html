@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="../static/js/main.js"></script> 
+{% endblock %}
+
+{% block alert %}
+    <div class="bg-red-rgba lg:w-[60vw] w-[90vw] h-[30vh] absolute lg:left-[20%] left-[5%] lg:top-[35%] top-[45%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alert"><p>Nie mozna wygenerowac schematu podatkowego</p><p onclick="refresh()">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
+    <div class="bg-green-rgba w-[60vw] h-[30vh] absolute left-[20%] top-[35%] justify-center items-center rounded-lg font-semibold uppercase transition-opacity duration-1000 ease-in-out hidden flex-col text-[#FEFEFE]" id="alertPositive"><p>Spełnia wszystkie warunki</p><p onclick="refresh()">->WYPEŁNIJ JESZCZE RAZ<-</p></div>
+{% endblock %}
+
+{% block content %}
+    <p class="text-5xl mb-[10vh] tracking-wide text-black font-semibold text-center">Schemat Podatkowy</p>
+
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 font-normal bg-[#00000008] rounded-xl overflow-hidden" id="schematStandardowy">
+        <p>        
+            (1) Czy jest schemat standarowy?<span class="text-red-500">*</span>
+        </p>
+
+        <div class="w-full h-ful flex align-center justify-center py-2 pr-5 font-semibold">
+            <input type="radio" class="mx-3" name="questionAnswer" value="Tak" onclick="schematStandarowy(this)" autocomplete="off">Tak</input>
+            <input type="radio" class="mx-3" name="questionAnswer" value="Nie" onclick="schematStandarowy(this)" autocomplete="off">Nie</input>
+        </div>
+
+    </div>
+
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl hidden" id="schematTransgraniczny">
+        <p>        
+            (2) Czy jest schemat transgraniczny?<span class="text-red-500">*</span>
+        </p>
+
+        <div class="w-full h-ful flex align-center justify-center py-2 pr-5 font-semibold">
+            <input type="radio" class="mx-3" name="questionAnswer" value="Tak" onclick="schematTransgraniczny(this);" autocomplete="off">Tak</input>
+            <input type="radio" class="mx-3" name="questionAnswer" value="Nie" onclick="schematTransgraniczny(this);" autocomplete="off">Nie</input>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl hidden" id="3">
+        <p>        
+            (3) Dane do spełnienia kryterium głównego korzystającgo (lub)<span class="text-red-500">*</span>
+        </p>
+    
+        <div class="w-full h-ful flex items-start flex-col py-2 pr-5">            
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="trzy(this);" autocomplete="off"><label><span class="font-semibold">a)</span> Przychód w EURO większy niz 10mln </label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="trzy(this);" autocomplete="off"><label><span class="font-semibold">b)</span> Koszty w EURO większe niz 10mln </label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="trzy(this);" autocomplete="off"><label><span class="font-semibold">c)</span> Aktywa w EURO większe niz 10mln </label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Nie" onclick="trzy(this);" autocomplete="off"><label class="text-red-400 font-semibold"> ŻADNE KRYTERIUM NIE JEST SPEŁNIONE!</label></div>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl hidden" id="4_1">
+        <p>        
+            (4_1) Czy jest spełnione chociaz jedno kryterium korzyści głównej? (art 86a par 1 pkt ordynacji podatkowej)<span class="text-red-500">*</span>
+        </p>
+
+        <div class="w-full h-ful flex items-start flex-col py-2 pr-5">          
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">a)</span> Niepowstanie z obowiązku podatkowego</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">b)</span> Odsuniecie w czasie zobowiązywania podatkowego</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">c)</span> Obniżenie wysokość zobowiązania podatkowego</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">d)</span> Powstanie lub zawyżenie straty podatkowej</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">e)</span> Powstanie nadpłaty lub prawa do zwroty podatku</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">f)</span> Zawyżenie kwoty nadpłaty</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">g)</span> Zawyżenie kwoty zwrotu podatku</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">h)</span> Brak obowiązku pobrania podatku przez płatnika jeżeli wynika on z niepowstanie zobowiązania podatkowego, przesunięcie w czasie zobowiązania podatkowego lub obniżenie jego wysokości</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">i)</span> Podwyższenie kwoty nadwyżki podatku naliczonego nad należnym</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_1(this);" autocomplete="off"><label><span class="font-semibold">j)</span> Niepowstanie obowiązku lub odsunięcie w czasie powstania obowiązku sporządzania i przekazywania informacji podatkowych</label></div>
+            <div class="flex justify-start text-justify w-full border-b-0 border-[#424242] border-dotted my-1 capitalize"><input type="checkbox" class="mx-3" name="questionAnswer" value="Nie" onclick="cztery_1(this);" autocomplete="off"><label class="text-red-400 font-semibold">ŻADNE KRYTERIUM NIE JEST SPEŁNIONE!</label></div>
+        </div>
+    </div>
+    
+
+    <div class="w-full h-full text-center hidden align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl" id="4_2">
+        <p>        
+            (4_2) Czy są spełnione przesłanki?<span class="text-red-500">*</span>
+        </p>
+
+        <form class="w-full h-ful flex items-center flex-col py-2 pr-5" id="4_2_form" onsubmit="return cztery_2(this)">
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" autocomplete="off" id="4_2_checkbox"><label><span class="font-semibold">I)</span> Przesłanka wystąpienia korzysci podatkowej</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" autocomplete="off" id="4_2_checkbox"><label><span class="font-semibold">II)</span> Przesłanka aby korzyść podatkowa była główną lub jedną z głównych korzyści operacji</label></div>
+            <div class="flex justify-start text-justify w-full border-b-0 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" autocomplete="off" id="4_2_checkbox"><label><span class="font-semibold">III)</span> Alternatywna droga operacji </label></div>            
+            <button class="border-1 border-dotted font-semibold" type="submit">Prześlij</button>
+        </form>
+    </div>
+    
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl hidden" id="4_3">
+        <p>        
+            (4_3) Czy jest spełnione chociaz jedno kryterium ogólnej cechy rozpoznawczej?<span class="text-red-500">*</span>
+        </p>
+
+        <div class="w-full h-ful flex items-start flex-col py-2 pr-5">            
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">a)</span> Klauzula poufności</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">b)</span> Wynagrodzenie success fee (*** nie godziny realne jako sukces***)</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">c)</span> Wdrożenie "gotowca" ujednolicone formatu dokumentów</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">d)</span> Nabicie spółki ze strata</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">e)</span> Zmiana kwalifikacji dochodów / przychodów</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">f)</span> Okrężny obieg środków pieniężnych</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">g)</span> Transgraniczne płatności</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">h)</span> Zobowiązanie korzystającego do współpracy z promotorem</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="cztery_3(this);" autocomplete="off"><label><span class="font-semibold">i)</span> Respektowanie zobowiązan dotyczących wynagrodzenia pomimo braku success fee</label></div>
+            <div class="flex justify-start text-justify w-full border-b-0 border-[#424242] border-dotted my-1 capitalize"><input type="checkbox" class="mx-3" name="questionAnswer" value="Nie" onclick="cztery_3(this);" autocomplete="off"><label class="text-red-400 font-semibold">ŻADNE KRYTERIUM NIE JEST SPEŁNIONE!</label></div>
+        </div>
+    </div>
+
+
+    <!-- 4' -->
+    <div class="w-full h-full text-center align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xlw hidden" id="4prim">
+        <p>        
+            (4') Czy jest spełnione chociaz jedno kryterium szczególnej cechy rozpoznawczej?<span class="text-red-500">*</span>
+        </p>
+
+        <div class="w-full h-ful flex items-start flex-col py-2 pr-5">            
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">a)</span> Płatności zagranicę są kosztem</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">b)</span> Odpisy amortyzacyjne tego samego środka w różnych krajach</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">c)</span> Dochód lub majątek korzysta z unikania podwójnego opodatkowania</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">d)</span> Różnica w wynagrodzeniu przeniesienia aktywow między państwami wynosi co najmniej 25%</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">e)</span> Obejście przepisów ob wymianie informacji podatkowych z innymi państwami</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">f)</span> Nieprzejrzysta struktura -> problem z beneficjentem rzeczywistym</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">g)</span> Uproszczenie w związku z przepisami cen transferowych pomiędzy krajami</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryPrim(this);" autocomplete="off"><label><span class="font-semibold">h)</span> przeniesienie między podmiotami powiązanymi trudnych do wyceny wartości niematerialnych</label></div>
+            <div class="flex justify-start text-justify w-full border-b-0 border-[#424242] border-dotted my-1 capitalize"><input type="checkbox" class="mx-3" name="questionAnswer" value="Nie" onclick="czteryPrim(this);" autocomplete="off"><label class="text-red-400 font-semibold">ŻADNE KRYTERIUM NIE JEST SPEŁNIONE!</label></div>
+        </div>
+    </div>
+
+    <!-- 4'' -->
+    <div class="w-full h-full text-center flex align-center justify-center flex-col py-5 px-2 my-2 bg-[#00000008] rounded-xl hidden" id="42prim">
+        <p>        
+            (4'') Czy jest spełnione chociaz jedno kryterium innej szczególnej cechy rozpoznawczej?<span class="text-red-500">*</span>
+        </p>
+    
+        <div class="w-full h-ful flex items-start flex-col py-2 pr-5">            
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryDwaPrim(this);" autocomplete="off"><label><span class="font-semibold">a)</span> Istotniy z punktu widzenia USTAWY O RACHUNKOWOŚCI ORAZ wpływa na podatek, aktywa lub rezerwy przekracza 5 mln złotych (art 86 par 1 pkt 1 litera a-d) </label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryDwaPrim(this);" autocomplete="off"><label><span class="font-semibold">b)</span> Płatnik byłby zobowiązany pobrać podstem wyższy niż 5 mln złotych (art 86 par 1 pkt 1 litera b) >>> podatek u źródła !!!</label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryDwaPrim(this);" autocomplete="off"><label><span class="font-semibold">c)</span> Dochody (przychody) NIEREZYDENTA przebaczają 25 mln złotych /art 86 par 1 pkt 1 litera c/ </label></div>
+            <div class="flex justify-start text-justify w-full border-b-2 border-[#424242] border-dotted my-1"><input type="checkbox" class="mx-3" name="questionAnswer" value="Tak" onclick="czteryDwaPrim(this);" autocomplete="off"><label><span class="font-semibold">d)</span> Różnica pomiędzy polskim podatkiem s faktycznie podlegającym w inny państwie przekroczy 5 milionów złotych</label></div>
+            <div class="flex justify-start text-justify w-full border-b-0 border-[#424242] border-dotted my-1 capitalize"><input type="checkbox" class="mx-3" name="questionAnswer" value="Nie" onclick="czteryDwaPrim(this);" autocomplete="off"><label class="text-red-400 font-semibold">ŻADNE KRYTERIUM NIE JEST SPEŁNIONE!</label></div>
+        </div>
+    </div>
+
+    <!-- 4 -->
+
+{% endblock %}
